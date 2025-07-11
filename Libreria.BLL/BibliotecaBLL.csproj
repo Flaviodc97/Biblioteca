@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="IServices\" />
+    <Folder Include="Serivices\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LibreriaDAL\BibliotecaDAL.csproj" />
+  </ItemGroup>
+
 </Project>
