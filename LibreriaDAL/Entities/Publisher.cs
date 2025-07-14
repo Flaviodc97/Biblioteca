@@ -10,7 +10,7 @@ namespace BibliotecaDAL.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public byte YearOfPublication { get; set; }
+        public short YearOfPublication { get; set; }
         public string WebSite { get; set; }
         public string Email { get; set; }
         public IList<Book> Books { get; set; }
