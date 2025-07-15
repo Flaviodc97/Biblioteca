@@ -20,5 +20,7 @@ namespace BibliotecaDAL.Entities
         public IList<Loan> Loans { get; set; }
         public IList<Review> Reviews { get; set; }
         public IList<Reservation> Reservations { get; set; }
+        public IList<Author> Authors { get; set; }
+        public IList<Category> Categories { get; set; }
     }
 }

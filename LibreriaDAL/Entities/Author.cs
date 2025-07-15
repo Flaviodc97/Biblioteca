@@ -15,5 +15,6 @@ namespace BibliotecaDAL.Entities
         public DateTime? DateOfDeath { get; set; }
         public string Biography { get; set; }
         public string Nationality { get; set; }
+        public IList<Book> Books { get; set; }
     }
 }

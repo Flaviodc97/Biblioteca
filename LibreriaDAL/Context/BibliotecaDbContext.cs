@@ -77,8 +77,17 @@ namespace BibliotecaDAL.Context
                 .WithMany(u => u.Reservations)
                 .HasForeignKey(u => u.UserId);
 
+            // Author n to n Book
+            modelBuilder.Entity<Author>()
+                .HasMany(a => a.Books)
+                .WithMany(a => a.Authors)
+                .UsingEntity(j => j.ToTable("AuthorBooks"));
 
-
+            // Book n to n Category
+            modelBuilder.Entity<Book>()
+                .HasMany(b => b.Categories)
+                .WithMany(c => c.Books)
+                .UsingEntity(j => j.ToTable("BookCategories"));
         }
     }
 }
