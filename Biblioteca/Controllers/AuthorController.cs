@@ -1,0 +1,100 @@
+﻿using BibliotecaBLL.DTOs;
+using BibliotecaBLL.IServices;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Biblioteca.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AuthorController : ControllerBase
+    {
+        private readonly IAuthorService _authorService;
+        public AuthorController(IAuthorService authorService)
+        {
+            _authorService = authorService;
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddAuthor(AuthorDTO authorDTO)
+        {
+            try
+            {
+                var result = _authorService.AddAsync(authorDTO);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<AuthorDTO>
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAuthor(int  id)
+        {
+            try
+            {
+                var result = await _authorService.GetAsync(id);
+                return Ok(new ApiResponse<AuthorDTO>
+                {
+                    Success = true,
+                    Data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<AuthorDTO>
+                { 
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllAuthors()
+        {
+            try
+            {
+                var result = await _authorService.GetAllAsync();
+                return Ok(new ApiResponse<List<AuthorDTO>>
+                {
+                    Success = true,
+                    Data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<AuthorDTO>
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAuthor(int id)
+        {
+            try
+            {
+                var result = await _authorService.Delete(id);
+                return Ok( new ApiResponse<bool> 
+                {
+                    Success = true,
+                    Data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<AuthorDTO>
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+    }
+}
