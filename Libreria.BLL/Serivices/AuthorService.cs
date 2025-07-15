@@ -21,7 +21,7 @@ namespace BibliotecaBLL.Serivices
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
-            _authorRepository = _unitOfWork.GetRepository<Author>();
+            _authorRepository = unitOfWork.GetRepository<Author>();
         }
 
         public async Task<AuthorDTO> AddAsync(AuthorDTO dto)

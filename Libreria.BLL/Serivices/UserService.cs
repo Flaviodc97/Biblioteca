@@ -6,6 +6,7 @@ using BibliotecaDAL.IRepositories;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,13 +21,14 @@ namespace BibliotecaBLL.Serivices
         public UserService(IMapper mapper, IUnitOfWork unitOfWork) 
         {
             _unitOfWork = unitOfWork;
-            _userRepository = _unitOfWork.GetRepository<User>();
+            _userRepository = unitOfWork.GetRepository<User>();
             _mapper = mapper;
         }
         public async Task<UserDTO> AddAsync(UserDTO dto)
         {
             try
             {
+                if(!dto.MembershipType.Equals(MembershipType.Free.ToString()) && !dto.MembershipType.Equals(MembershipType.Standard) && !dto.MembershipType.Equals(MembershipType.Ultra)) throw new Exception($"Invalid Membership Type: {dto.MembershipType}. Valid values are Free, Standard, Ultra.");
                 var user = await _userRepository.AddAsync(_mapper.Map<User>(dto));
                 await _unitOfWork.SaveChangesAsync();
                 return _mapper.Map<UserDTO>(user);
@@ -99,6 +101,7 @@ namespace BibliotecaBLL.Serivices
         {
             try
             {
+                if (!dto.MembershipType.Equals(MembershipType.Free.ToString()) && !dto.MembershipType.Equals(MembershipType.Standard) && !dto.MembershipType.Equals(MembershipType.Ultra)) throw new Exception($"Invalid Membership Type: {dto.MembershipType}. Valid values are Free, Standard, Ultra.");
                 var res = await _userRepository.UpdateAsync(_mapper.Map<User>(dto));
                 await _unitOfWork.SaveChangesAsync();
                 return _mapper.Map<UserDTO>(dto);

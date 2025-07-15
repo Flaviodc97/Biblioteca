@@ -22,7 +22,7 @@ namespace BibliotecaBLL.Serivices
         public CategoryService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
-            _categoryRepository = _unitOfWork.GetRepository<Category>();
+            _categoryRepository = unitOfWork.GetRepository<Category>();
             _mapper = mapper;
         }
         public async Task<CategoryDTO> AddAsync(CategoryDTO dto)

@@ -21,7 +21,7 @@ namespace BibliotecaBLL.Serivices
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
-            _notificationRepository = _unitOfWork.GetRepository<Notification>();
+            _notificationRepository = unitOfWork.GetRepository<Notification>();
         }
         public async Task<NotificationDTO> AddAsync(NotificationDTO dto)
         {

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Biblioteca.Controllers
 {
     [ApiController]
-    [Route("api/{controller}")]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;

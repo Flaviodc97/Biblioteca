@@ -18,7 +18,7 @@ namespace Biblioteca.Controllers
         {
             try
             {
-                var result = _authorService.AddAsync(authorDTO);
+                var result = await _authorService.AddAsync(authorDTO);
                 return Ok(result);
             }
             catch (Exception ex)

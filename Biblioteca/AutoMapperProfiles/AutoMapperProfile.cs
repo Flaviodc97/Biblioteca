@@ -25,8 +25,10 @@ namespace Biblioteca.AutoMapperProfiles
 
             CreateMap<User, UserDTO>()
                 .ForMember(dest => dest.MembershipType, opt => opt.MapFrom(src => src.MembershipType.ToString()))
-                .ForMember(dest => dest.MaxLoansAllowed, opt => opt.MapFrom(src => MappingHelper.GetMaxLoansAllowed(src.MembershipType)))
-                .ReverseMap();
+                .ForMember(dest => dest.MaxLoansAllowed, opt => opt.MapFrom(src => MappingHelper.GetMaxLoansAllowed(src.MembershipType)));
+
+            CreateMap<UserDTO, User>()
+                .ForMember(dest => dest.MembershipType, opt => opt.MapFrom(src => Enum.Parse<MembershipType>(src.MembershipType)));
         }
     }
 }
