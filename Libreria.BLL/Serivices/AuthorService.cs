@@ -29,6 +29,7 @@ namespace BibliotecaBLL.Serivices
             try
             {
                 var author = await _authorRepository.AddAsync(_mapper.Map<Author>(dto));
+                await _unitOfWork.SaveChangesAsync();
                 return _mapper.Map<AuthorDTO>(author);
             }
             catch (SqlException ex)
@@ -48,6 +49,7 @@ namespace BibliotecaBLL.Serivices
                 var authorToDelete = await _authorRepository.GetByIdAsync(id);
                 if (authorToDelete is null) throw new Exception($"Author with id: {id} not found");
                 var result = _authorRepository.Remove(authorToDelete);
+                if(result) await _unitOfWork.SaveChangesAsync();
                 return result;
             }
             catch (SqlException ex)
@@ -101,6 +103,7 @@ namespace BibliotecaBLL.Serivices
             try
             {
                 var result = await _authorRepository.UpdateAsync(_mapper.Map<Author>(dto));
+                await _unitOfWork.SaveChangesAsync();
                 return _mapper.Map<AuthorDTO>(result);
             }
             catch (SqlException ex)

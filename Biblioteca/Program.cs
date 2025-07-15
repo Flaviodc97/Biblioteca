@@ -35,6 +35,10 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddControllers();
 builder.Services.AddScoped<IBookService,BookService>();
 builder.Services.AddScoped<IPublisherService, PublisherSerivice>();
+builder.Services.AddScoped<IAuthorService, AuthorService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 // Unit Of Work Pattern
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();

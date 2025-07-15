@@ -28,6 +28,7 @@ namespace BibliotecaBLL.Serivices
             try
             {
                 var user = await _userRepository.AddAsync(_mapper.Map<User>(dto));
+                await _unitOfWork.SaveChangesAsync();
                 return _mapper.Map<UserDTO>(user);
             }
             catch (SqlException ex)
@@ -46,6 +47,7 @@ namespace BibliotecaBLL.Serivices
             {
                 var userToDelete = await _userRepository.GetByIdAsync(id);
                 var result = _userRepository.Remove(userToDelete);
+                await _unitOfWork.SaveChangesAsync();
                 return result;
             }
             catch (SqlException ex)
@@ -98,6 +100,7 @@ namespace BibliotecaBLL.Serivices
             try
             {
                 var res = await _userRepository.UpdateAsync(_mapper.Map<User>(dto));
+                await _unitOfWork.SaveChangesAsync();
                 return _mapper.Map<UserDTO>(dto);
             }
             catch (SqlException ex)

@@ -30,6 +30,7 @@ namespace BibliotecaBLL.Serivices
             try
             {
                 var category = await _categoryRepository.AddAsync(_mapper.Map<Category>(dto));
+                await _unitOfWork.SaveChangesAsync();
                 return _mapper.Map<CategoryDTO>(category);
             }
             catch (SqlException ex)
@@ -49,6 +50,7 @@ namespace BibliotecaBLL.Serivices
             {
                 var categoryToDelete = await _categoryRepository.GetByIdAsync(id);
                 var result = _categoryRepository.Remove(categoryToDelete);
+                await _unitOfWork.SaveChangesAsync();
                 return result;
 
             }
@@ -105,6 +107,7 @@ namespace BibliotecaBLL.Serivices
             try
             {
                 var category = await _categoryRepository.UpdateAsync(_mapper.Map<Category>(dto));
+                await _unitOfWork.SaveChangesAsync();
                 return _mapper.Map<CategoryDTO>(category);
             }
             catch (SqlException ex)

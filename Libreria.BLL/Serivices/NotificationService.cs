@@ -49,6 +49,7 @@ namespace BibliotecaBLL.Serivices
             {
                 var notification = await _notificationRepository.GetByIdAsync(id);
                 var result = _notificationRepository.Remove(notification);
+                await _unitOfWork.SaveChangesAsync();
                 return result;
             }
             catch (SqlException ex)
@@ -103,6 +104,7 @@ namespace BibliotecaBLL.Serivices
             try
             {
                 var result = await _notificationRepository.UpdateAsync(_mapper.Map<Notification>(dto));
+                await _unitOfWork.SaveChangesAsync();
                 if (result is null) throw new Exception("Error during the update");
                 return _mapper.Map<NotificationDTO>(result);
             }

@@ -33,6 +33,10 @@ namespace BibliotecaDAL.Entities
             }
         }
         public IList<Notification> Notifications { get; set; }
+        public IList<Loan> Loans { get; set; }
+        public IList<Review> Reviews { get; set; }
+        public IList<Reservation> Reservations { get; set; }
+
 
         
     }

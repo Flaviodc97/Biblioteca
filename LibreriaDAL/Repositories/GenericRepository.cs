@@ -27,7 +27,7 @@ namespace BibliotecaDAL.Repositories
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            var result = await _table.ToListAsync();
+            var result = await _table.AsNoTracking().ToListAsync();
             return result;
         }
 
