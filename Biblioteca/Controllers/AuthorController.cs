@@ -1,4 +1,5 @@
 ﻿using BibliotecaBLL.DTOs;
+using BibliotecaBLL.DTOs.AuthorDTOS;
 using BibliotecaBLL.IServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -89,6 +90,73 @@ namespace Biblioteca.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new ApiResponse<AuthorDTO>
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [HttpPost("AddBookToAuthor")]
+        public async Task<IActionResult> AddBookToAthor(BookAuthorDTO bookAuthorDTO)
+        {
+            try
+            {
+                var result = await _authorService.AddBookToAuthorAsync(bookAuthorDTO);
+                return Ok(new ApiResponse<AuthorWithBooksDTO>
+                {
+                    Success = true,
+                    Data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<BookAuthorDTO>
+                {
+                    Success = false,
+                    Message = ex.Message
+
+                });
+            }
+        }
+
+        [HttpGet("GetAuthorsBooks")]
+        public async Task<IActionResult> GetAuthorsBooks(int id)
+        {
+            try 
+            {
+                var result = await _authorService.GetAuthorWithBooks(id);
+                return Ok(new ApiResponse<AuthorWithBooksDTO> 
+                {
+                    Success = true,
+                    Data = result
+                });
+            }
+            catch(Exception ex) 
+            {
+                return StatusCode(500, new ApiResponse<AuthorDTO>
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [HttpDelete("RemoveBooksFromAuthor")]
+        public async Task<IActionResult> RemoveBooksFromAuthor(BookAuthorDTO bookAuthorDTO)
+        {
+            try 
+            {
+                var result = await _authorService.RemoveBookToAuthorAsync(bookAuthorDTO);
+                return Ok(new ApiResponse<AuthorWithBooksDTO>
+                {
+                    Success = true,
+                    Data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<BookAuthorDTO>
                 {
                     Success = false,
                     Message = ex.Message

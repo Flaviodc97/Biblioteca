@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BibliotecaDAL.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BibliotecaDAL.Entities
 {
-    public class Reservation
+    public class Reservation : IEntity
     {
         public int Id { get; set; }
         public DateTime StartDate { get; set; }

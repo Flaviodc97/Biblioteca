@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BibliotecaDAL.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace BibliotecaDAL.IRepositories
 {
     public interface IUnitOfWork : IDisposable
     {
-        IGenericRepository<T> GetRepository<T>() where T : class;
-        Task SaveChangesAsync();
+        IGenericRepository<T> GetRepository<T>() where T : class, IEntity;
+        Task<int> SaveChangesAsync();
     }
 }

@@ -10,6 +10,7 @@ namespace BibliotecaDAL.IRepositories
     {
         Task<T> AddAsync(T entity);
         Task<T?> GetByIdAsync(params object[] id);
+        Task<List<T>> GetByIdRangeAsync(List<int> ids);
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> UpdateAsync(T entity);
         bool Remove(T entity);

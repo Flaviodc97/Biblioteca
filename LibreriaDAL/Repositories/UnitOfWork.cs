@@ -1,4 +1,5 @@
 ﻿using BibliotecaDAL.Context;
+using BibliotecaDAL.Interface;
 using BibliotecaDAL.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,7 +19,7 @@ namespace BibliotecaDAL.Repositories
             _context = context;
             _repositories = new Dictionary<Type, object>();
         }
-        public IGenericRepository<T> GetRepository<T>() where T : class
+        public IGenericRepository<T> GetRepository<T>() where T : class, IEntity
         {
             if (_repositories.ContainsKey(typeof(T)))
             {
@@ -31,9 +32,9 @@ namespace BibliotecaDAL.Repositories
 
         }
 
-        public async Task SaveChangesAsync()
+        public async Task<int> SaveChangesAsync()
         {
-            await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         }
 
         public void Dispose()

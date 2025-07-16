@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BibliotecaBLL.DTOs
+namespace BibliotecaBLL.DTOs.AuthorDTOS
 {
     public record AuthorDTO
     {
@@ -15,5 +15,6 @@ namespace BibliotecaBLL.DTOs
         public DateTime? DateOfDeath { get; set; }
         public string Biography { get; set; }
         public string Nationality { get; set; }
+
     }
 }

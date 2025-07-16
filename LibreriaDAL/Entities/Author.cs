@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BibliotecaDAL.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BibliotecaDAL.Entities
 {
-    public class Author
+    public class Author : IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -15,6 +16,6 @@ namespace BibliotecaDAL.Entities
         public DateTime? DateOfDeath { get; set; }
         public string Biography { get; set; }
         public string Nationality { get; set; }
-        public IList<Book> Books { get; set; }
+        public IList<Book> Books { get; set; } = new List<Book>();
     }
 }

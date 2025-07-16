@@ -1,4 +1,5 @@
 ﻿using BibliotecaDAL.Context;
+using BibliotecaDAL.Interface;
 using BibliotecaDAL.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BibliotecaDAL.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class, IEntity
     {
         private readonly BibliotecaDbContext _context;
         private protected DbSet<T> _table;
@@ -19,6 +20,7 @@ namespace BibliotecaDAL.Repositories
             _context = context;
             _table = context.Set<T>();
         }
+
         public async Task<T> AddAsync(T entity)
         {
             var result = await _table.AddAsync(entity);
@@ -28,6 +30,12 @@ namespace BibliotecaDAL.Repositories
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             var result = await _table.AsNoTracking().ToListAsync();
+            return result;
+        }
+
+        public async Task<List<T>> GetByIdRangeAsync(List<int> ids)
+        {
+            var result = await _table.Where(x => ids.Contains(x.Id)).ToListAsync();
             return result;
         }
 
