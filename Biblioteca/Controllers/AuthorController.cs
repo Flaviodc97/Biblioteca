@@ -142,7 +142,7 @@ namespace Biblioteca.Controllers
             }
         }
 
-        [HttpDelete("RemoveBooksFromAuthor")]
+        [HttpPatch("RemoveBooksFromAuthor")]
         public async Task<IActionResult> RemoveBooksFromAuthor(BookAuthorDTO bookAuthorDTO)
         {
             try 

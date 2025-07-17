@@ -171,19 +171,24 @@ namespace BibliotecaBLL.Serivices
         {
             try
             {
-                var author = await _authorRepository.GetByIdAsync(dto.AuthorId);
-                if (author is null) throw new Exception($"Author with id: {dto.AuthorId} not found");
+                var author = await _unitOfWork.AuthorRepository.GetAuthorWithBooks(dto.AuthorId);
+                if (author is null) 
+                    throw new Exception($"Author with id: {dto.AuthorId} not found");
                 
-                var books = await _unitOfWork.GetRepository<Book>().GetByIdRangeAsync(dto.BookIds);
-                if (books.Count() == 0) throw new Exception("No Books found whith the given Ids");
-                if (books.Count() != dto.BookIds.Count()) throw new Exception("Error not found all the Books with the given Ids");
+                var books = author.Books
+                    .Where(x => dto.BookIds.Contains(x.Id))
+                    .ToList();
+
+                if (books.Count() == 0) 
+                    throw new Exception("No Books found whith the given Ids");
 
                 foreach (var book in books)
                 {
                     author.Books.Remove(book);
                 }
 
-                if (!(await _unitOfWork.SaveChangesAsync()>0)) throw new Exception("Error During Entities Saving");
+                if (!(await _unitOfWork.SaveChangesAsync() > 0)) 
+                    throw new Exception("Error During Entities Saving");
 
                 return _mapper.Map<AuthorWithBooksDTO>(author);
             }
