@@ -14,11 +14,16 @@ namespace BibliotecaDAL.Repositories
     {
         private readonly BibliotecaDbContext _context;
         private Dictionary<Type, object> _repositories;
+
         public UnitOfWork(BibliotecaDbContext context)
         {
             _context = context;
+            AuthorRepository = new AuthorRepository(_context);
             _repositories = new Dictionary<Type, object>();
+
         }
+
+        public IAuthorRepository AuthorRepository { get; private set; }
         public IGenericRepository<T> GetRepository<T>() where T : class, IEntity
         {
             if (_repositories.ContainsKey(typeof(T)))

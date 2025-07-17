@@ -154,7 +154,7 @@ namespace BibliotecaBLL.Serivices
         {
             try
             {
-                var author = await _authorRepository.GetByIdAsync(id);
+                var author = await _unitOfWork.AuthorRepository.GetAuthorWithBooks(id);
                 return _mapper.Map<AuthorWithBooksDTO>(author);
             }
             catch (SqlException ex)

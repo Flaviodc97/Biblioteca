@@ -9,6 +9,7 @@ namespace BibliotecaDAL.IRepositories
 {
     public interface IUnitOfWork : IDisposable
     {
+        IAuthorRepository AuthorRepository { get; }
         IGenericRepository<T> GetRepository<T>() where T : class, IEntity;
         Task<int> SaveChangesAsync();
     }
