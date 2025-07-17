@@ -9,6 +9,6 @@ namespace BibliotecaBLL.IServices
 {
     public interface IUserService : IService<UserDTO>
     {
-
+        Task<PaginatedListDTO<UserDTO>> GetUSersPaginated(int pageIndex, int pageSize);
     }
 }

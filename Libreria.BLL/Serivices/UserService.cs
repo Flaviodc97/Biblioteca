@@ -97,6 +97,11 @@ namespace BibliotecaBLL.Serivices
             }
         }
 
+        public Task<PaginatedListDTO<UserDTO>> GetUSersPaginated(int pageIndex, int pageSize)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<UserDTO> UpdateAsync(UserDTO dto)
         {
             try

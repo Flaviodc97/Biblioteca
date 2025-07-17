@@ -164,5 +164,27 @@ namespace Biblioteca.Controllers
             }
         }
 
+        [HttpGet("GetAuthorsPaginated")]
+        public async Task<IActionResult> GetAuthorsPaginated(int pageIndex, int pageSize)
+        {
+            try
+            {
+                var result = await _authorService.GetPaginatedListAsync(pageIndex, pageSize);
+                return Ok(new ApiResponse<PaginatedListDTO<AuthorDTO>> 
+                {
+                    Success = true,
+                    Data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<AuthorDTO>
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
     }
 }

@@ -201,5 +201,23 @@ namespace BibliotecaBLL.Serivices
                 throw;
             }
         }
+
+        public async Task<PaginatedListDTO<AuthorDTO>> GetPaginatedListAsync(int pageIndex, int pageSize)
+        {
+            try
+            {
+                var (authorList, totalPages) = await _unitOfWork.AuthorRepository.GetAuthorPaginatedAsync(pageIndex, pageSize);
+                var authorListDTO = _mapper.Map<List<AuthorDTO>>(authorList);
+                return new PaginatedListDTO<AuthorDTO>(authorListDTO,pageIndex, totalPages);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("Database Error: ", ex);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

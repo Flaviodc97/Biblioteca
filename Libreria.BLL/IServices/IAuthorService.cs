@@ -13,5 +13,6 @@ namespace BibliotecaBLL.IServices
         Task<AuthorWithBooksDTO> AddBookToAuthorAsync(BookAuthorDTO dto);
         Task<AuthorWithBooksDTO> RemoveBookToAuthorAsync(BookAuthorDTO dto);
         Task<AuthorWithBooksDTO> GetAuthorWithBooks(int id);
+        Task<PaginatedListDTO<AuthorDTO>> GetPaginatedListAsync(int pageIndex, int pageSize);
     }
 }

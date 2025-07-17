@@ -24,5 +24,21 @@ namespace BibliotecaDAL.Repositories
                 .FirstOrDefaultAsync();
             return result;
         }
+
+        public async Task<(List<Author>, int)> GetAuthorPaginatedAsync(int pageIndex, int pageSize)
+        {
+            var authors = await _table
+                .OrderBy(x => x.Name)
+                .AsNoTracking()
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var count = await _table.CountAsync();
+            var totalPages = (int)Math.Ceiling(count / (double)pageSize);
+
+            return (authors, totalPages);
+
+        }
     }
 }
