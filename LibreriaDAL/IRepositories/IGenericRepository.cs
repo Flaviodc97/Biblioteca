@@ -14,5 +14,6 @@ namespace BibliotecaDAL.IRepositories
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> UpdateAsync(T entity);
         bool Remove(T entity);
+        IQueryable<T> GetQueryable();
     }
 }

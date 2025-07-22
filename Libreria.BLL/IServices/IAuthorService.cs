@@ -14,5 +14,7 @@ namespace BibliotecaBLL.IServices
         Task<AuthorWithBooksDTO> RemoveBookToAuthorAsync(BookAuthorDTO dto);
         Task<AuthorWithBooksDTO> GetAuthorWithBooks(int id);
         Task<PaginatedListDTO<AuthorDTO>> GetPaginatedListAsync(int pageIndex, int pageSize);
+        List<AuthorDTO> SearchAuthorList(AuthorSeachDTO authorSeachDTO);
+        List<AuthorDTO> GenericSearch(Dictionary<string, object> parameters);
     }
 }

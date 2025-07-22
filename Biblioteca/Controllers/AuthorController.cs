@@ -75,6 +75,30 @@ namespace Biblioteca.Controllers
                 });
             }
         }
+
+        [HttpGet("Search")]
+        public  IActionResult SearchAuthor([FromQuery] AuthorSeachDTO authorSearchDTO)
+        {
+            try
+            {
+                var result = _authorService.SearchAuthorList(authorSearchDTO);
+                return Ok(new ApiResponse<List<AuthorDTO>> 
+                {
+                    Success = true,
+                    Data = result
+
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<AuthorDTO>
+                {
+                    Success = false,
+                    Message = ex.Message
+                });            
+            
+            }
+        }
         [HttpDelete]
         public async Task<IActionResult> DeleteAuthor(int id)
         {
@@ -181,6 +205,27 @@ namespace Biblioteca.Controllers
                 return StatusCode(500, new ApiResponse<AuthorDTO>
                 {
                     Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [HttpPost("GenericSearch")]
+        public  IActionResult GenericSearch([FromBody] Dictionary<string, object> Params)
+        {
+            try
+            {
+                var result = _authorService.GenericSearch(Params);
+                return Ok(new ApiResponse<List<AuthorDTO>> {
+                    Success = true,
+                    Data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<AuthorDTO>
+                {
+                    Success = true,
                     Message = ex.Message
                 });
             }

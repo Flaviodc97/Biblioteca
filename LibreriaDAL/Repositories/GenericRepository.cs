@@ -56,5 +56,11 @@ namespace BibliotecaDAL.Repositories
             var result =  _table.Update(entity);
             return result.State == EntityState.Modified ? entity : null;
         }
+
+        public  IQueryable<T> GetQueryable()
+        {
+            var result =  _table.AsNoTracking().AsQueryable();
+            return result;
+        }
     }
 }

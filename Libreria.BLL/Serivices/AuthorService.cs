@@ -5,10 +5,15 @@ using BibliotecaBLL.IServices;
 using BibliotecaDAL.Entities;
 using BibliotecaDAL.IRepositories;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace BibliotecaBLL.Serivices
@@ -219,5 +224,105 @@ namespace BibliotecaBLL.Serivices
                 throw;
             }
         }
+
+        public List<AuthorDTO> SearchAuthorList(AuthorSeachDTO authorSeachDTO)
+        {
+            try
+            {
+                var query =  _authorRepository.GetQueryable();
+                if (!string.IsNullOrEmpty(authorSeachDTO.Name))
+                {
+                    query = query.Where(p => p.Name.Contains(authorSeachDTO.Name));
+                }
+
+                if (!string.IsNullOrEmpty(authorSeachDTO.LastName))
+                {
+                    query = query.Where(p => p.LastName.Contains(authorSeachDTO.LastName));
+                }
+
+                if(authorSeachDTO.StartDateOfBirth.HasValue)
+                {
+                    query = query.Where(p => p.DateOfBirth >= authorSeachDTO.StartDateOfBirth);
+                }
+
+                if (authorSeachDTO.EndDateOfBirth.HasValue)
+                {
+                    query = query.Where(p => p.DateOfBirth <= authorSeachDTO.EndDateOfBirth);
+                }
+
+                if (authorSeachDTO.StartDateOfDeath.HasValue)
+                {
+                    query = query.Where(p => p.DateOfDeath >= authorSeachDTO.StartDateOfDeath);
+                }
+
+                if (authorSeachDTO.EndDateOfDeath.HasValue)
+                {
+                    query = query.Where(p => p.DateOfDeath <= authorSeachDTO.EndDateOfDeath);
+                }
+
+                if (!string.IsNullOrEmpty(authorSeachDTO.Nationality))
+                {
+                    query = query.Where(p => p.Nationality.Contains(authorSeachDTO.Nationality));
+                }
+
+                return _mapper.Map<List<AuthorDTO>>(query.ToList());
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("Database Error: ", ex);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public List<AuthorDTO> GenericSearch(Dictionary<string, object> parameters)
+        {
+            try
+            {
+                var query = _unitOfWork.GetRepository<Author>().GetQueryable();
+
+                foreach (var param in parameters)
+                {
+                    query = SearchService<Author>.GenericSearch(query, param);
+
+                }
+
+                var result = query.ToList();
+                return _mapper.Map<List<AuthorDTO>>(result);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("Database Error: ", ex);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private static bool IsNumericType(object obj)
+        {
+            if (obj == null) return false;
+
+            // Gestisce JsonElement (System.Text.Json)
+            if (obj is JsonElement jsonElement)
+            {
+                return jsonElement.ValueKind == JsonValueKind.Number;
+            }
+
+            // Gestisce tipi numerici standard
+            Type type = obj.GetType();
+            Type underlyingType = Nullable.GetUnderlyingType(type) ?? type;
+
+            return underlyingType == typeof(byte) || underlyingType == typeof(sbyte) ||
+                   underlyingType == typeof(short) || underlyingType == typeof(ushort) ||
+                   underlyingType == typeof(int) || underlyingType == typeof(uint) ||
+                   underlyingType == typeof(long) || underlyingType == typeof(ulong) ||
+                   underlyingType == typeof(float) || underlyingType == typeof(double) ||
+                   underlyingType == typeof(decimal);
+        }
+
     }
 }

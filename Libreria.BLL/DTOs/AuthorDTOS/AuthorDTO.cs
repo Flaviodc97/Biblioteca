@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BibliotecaBLL.DTOs.AuthorDTOS
 {
-    public record AuthorDTO
+    public record AuthorDTO 
     {
         public int Id { get; set; }
         public string Name { get; set; }
