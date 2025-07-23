@@ -19,32 +19,32 @@ Mapping: AutoMapper
 	- User
     User(ID, Name, Surname, DateOfBirth, PhoneNumber, PostalCode, Address, City, MembershipStartDate, MembershipEndDate, MaxLoansAllowed, MembershipType)
 
-  - Notification
-  Notification(ID, Message, UserID [FK → User])
+  	- Notification
+  	Notification(ID, Message, UserID [FK → User])
 
-  - Book
-  Book(ID, Title, Subtitle, ISBN, Pages, Description, Language, Summary, PublisherID [FK → Publisher])
+  	- Book
+  	Book(ID, Title, Subtitle, ISBN, Pages, Description, Language, Summary, PublisherID [FK → Publisher])
 
-  - Author
-  Author(ID, Name, LastName, DateOfBirth, DateOfDeath, Biography, Nationality)
+  	- Author
+  	Author(ID, Name, LastName, DateOfBirth, DateOfDeath, Biography, Nationality)
 
-  - Publisher
-  Publisher(ID, Name, YearOfPublication)
+ 	 - Publisher
+  	Publisher(ID, Name, YearOfPublication)
 
-  - Category
-  Category(ID, Name, Description, Code, Website, Email)
+  	- Category
+ 	Category(ID, Name, Description, Code, Website, Email)
 
-  - Review (N:N tra User e Book)
-  Review(ID, Title, Valuation, Content, Photo, UserID [FK → User], BookID [FK → Book])
+  	- Review (N:N tra User e Book)
+  	Review(ID, Title, Valuation, Content, Photo, UserID [FK → User], BookID [FK → Book])
   
-  - Loan (N:N tra User e Book)
-    Loan(ID, StartDate, EndDate, UserID [FK → User], BookID [FK → Book])
+  	- Loan (N:N tra User e Book)
+   	Loan(ID, StartDate, EndDate, UserID [FK → User], BookID [FK → Book])
 
-  - Reservation (N:N tra User e Book)
-    Reservation(ID, StartDate, EndDate, UserID [FK → User], BookID [FK → Book])
+  	- Reservation (N:N tra User e Book)
+    	Reservation(ID, StartDate, EndDate, UserID [FK → User], BookID [FK → Book])
 
-  - BookAuthor (N:N tra Book e Author)
-    BookAuthor(ID, BookID [FK → Book], AuthorID [FK → Author])
+  	- BookAuthor (N:N tra Book e Author)
+    	BookAuthor(ID, BookID [FK → Book], AuthorID [FK → Author])
 
-  - BookCategory (N:N tra Book e Category)
-    BookCategory(ID, BookID [FK → Book], CategoryID [FK → Category])
+  	- BookCategory (N:N tra Book e Category)
+    	BookCategory(ID, BookID [FK → Book], CategoryID [FK → Category])
